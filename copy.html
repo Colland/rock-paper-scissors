@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rock paper scissors</title>
+        <meta charset = "UTF-8" />
+    </head>
+
+    <body>
+        <script>
+            let playerWin = 0;
+            let compWin = 0;
+
+            function computerPlay()
+            {
+                let max = 3
+                let min = 1
+                let randomNum = Math.floor(Math.random() * (max - min + 1) + min);
+
+                switch(randomNum)
+                {
+                    case 1:
+                    return "rock";
+
+                    case 2:
+                    return "scissors";
+
+                    case 3:
+                    return "paper";
+                }
+            }
+
+            function playRound(playerSelection, computerSelection)
+            {
+                let playerHand = playerSelection.toLowerCase();
+                let victoryMsg = "You win! " + playerHand + " beats " + computerSelection;
+                let defeatMsg = "You lost! " + playerHand + " loses to " + computerSelection;
+
+                if(playerHand === computerSelection)
+                {
+                    return "Draw! " + playerHand + " ties " + computerSelection;
+                }
+                else if(playerHand === "rock")
+                {
+                    if(computerSelection === "scissors")
+                    {
+                        playerWin++;
+                        return victoryMsg;
+                    }
+                    else 
+                    {
+                        compWin++;
+                        return defeatMsg;
+                    }
+                }
+                else if(playerHand === "scissors")
+                {
+                    if(computerSelection === "paper")
+                    {
+                        playerWin++;
+                        return victoryMsg;
+                    }
+                    else 
+                    {
+                        compWin++;   
+                        return defeatMsg;
+                    } 
+                }
+                else if(playerHand === "paper")
+                {
+                    if(computerSelection === "rock")
+                    {
+                        playerWin++;
+                        return victoryMsg;
+                    }
+                    else 
+                    {
+                        compWin++;
+                        return defeatMsg;
+                    } 
+                }
+                
+            }  
+
+            function game()
+            {
+                while(playerWin < 5 && compWin < 5)
+                {
+                    console.log(playRound(prompt("Rock paper or scissors?"), computerPlay()));
+                    console.log("Player score: " + playerWin + " Computer score: " + compWin);
+                }
+
+                if(playerWin === 5)
+                {
+                    console.log("Congratulations you won!");
+                }
+                else
+                {
+                    console.log("Yikes you lost!");
+                }
+                
+                playerWin = 0;
+                compWin = 0;
+            }
+        </script>
+    </body>
+</html>

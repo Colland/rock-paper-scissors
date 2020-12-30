@@ -1,0 +1,79 @@
+body {
+    background-color: #cffff89e;
+}
+
+/*@keyframes backgroundFade {
+    0% {background: #cffff89e;}
+    33% {background:#cfffd59e}
+    66% {background:#ffdccf9e;}
+    100% {background: #cffff89e;}
+} Maybe one day*/
+
+#pageWrapper {
+    display: flex;
+    flex-direction: column;
+    font-family: Chewy;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    font-size: 70px;
+}
+
+.fireFont {
+    color: #ff5103;
+}
+
+.plantFont {
+    color: #689a10;
+}
+
+.waterFont {
+    color: #0085c8;
+}
+
+#instructions {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 35px;
+    word-spacing: 5px;
+    margin-top: 30px;
+}
+
+#score {
+    display: flex;
+    justify-content: center;
+    font-size: 60px;
+    margin: 60px 0px 60px 0px;
+}
+
+#elementIcons {
+    display: flex;
+    justify-content: space-evenly;
+    cursor: pointer;
+}
+
+.playerButton:hover {
+    transform: scale(1.1);
+}
+
+.results {
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+    margin-top: 80px;
+}
+
+#computerChoice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+#compChoiceText {
+    margin-left: 20px;
+}
+

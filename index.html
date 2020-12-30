@@ -1,32 +1,62 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Rock paper scissors</title>
+        <link rel = "stylesheet" href = "styles/reset.css">
+        <link rel = "stylesheet" href = "styles/style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Chewy">
         <meta charset = "UTF-8" />
+        <title>Rock paper scissors</title>
     </head>
 
     <body>
+        <div id = pageWrapper>
+            <header>
+                <h1>
+                    <span class = "fireFont">Fire</span>
+                    <span class = "plantFont">Plant</span> 
+                    <span class = "waterFont">Water</span>
+                </h1>
+            </header>
+
+            <div id = "instructions">
+                <p><span class = "fireFont">Fire</span> beats <span class = "plantFont">Plant</span></p>
+                <p><span class = "plantFont">Plant</span> beats <span class = "waterFont">Water</span></p>    
+                <p><span class = "waterFont">Water</span> beats <span class = "fireFont">Fire</span></p>
+            </div>
+
+            <div id = "score">
+                <p id = "playerScore">0</p> 
+                <p>&nbsp-&nbsp</p>
+                <p id = "computerScore">0</p>
+            </div>
+
+            <div id = "elementIcons">
+                <div><img class = "playerButton" id = "fire" src = "images/FireIcon3.png"></div>
+                <div><img class = "playerButton" id = "plant" src = "images/PlantIcon3.png"></div>
+                <div><img class = "playerButton" id = "water" src = "images/WaterIcon3.png"></div>
+            </div>
+
+            <div class = "results">
+                <p>You have lost. <span class = "fireFont">Fire</span> burns <span class = "plantFont">Plant</span></p>
+             </div>
+
+            <div id = "computerChoice">
+                <p>Computer choice: </p>
+                <div id = "compChoiceText"><img id = "computerChoicePic" src = "images/FireIcon4.png"></div>
+            </div>
+        </div>
+
+
         <script>
             let playerWin = 0;
             let compWin = 0;
 
             function computerPlay()
             {
-                let max = 3
-                let min = 1
-                let randomNum = Math.floor(Math.random() * (max - min + 1) + min);
-
-                switch(randomNum)
-                {
-                    case 1:
-                    return "rock";
-
-                    case 2:
-                    return "scissors";
-
-                    case 3:
-                    return "paper";
-                }
+                let choices = ["fire", "plant", "water"];
+                let randomNum = Math.floor(Math.random() * 3);
+                
+                return(choices[randomNum]);
             }
 
             function playRound(playerSelection, computerSelection)
@@ -34,75 +64,75 @@
                 let playerHand = playerSelection.toLowerCase();
                 let victoryMsg = "You win! " + playerHand + " beats " + computerSelection;
                 let defeatMsg = "You lost! " + playerHand + " loses to " + computerSelection;
+                let tieMsg = "Draw! " + playerHand + " ties " + computerSelection;
+
+                const resultsDiv = document.querySelector("#results");
 
                 if(playerHand === computerSelection)
                 {
-                    return "Draw! " + playerHand + " ties " + computerSelection;
+                    return;
                 }
-                else if(playerHand === "rock")
+                else if(playerHand === "fire")
                 {
-                    if(computerSelection === "scissors")
+                    if(computerSelection === "plant")
                     {
                         playerWin++;
-                        return victoryMsg;
                     }
                     else 
                     {
                         compWin++;
-                        return defeatMsg;
                     }
                 }
-                else if(playerHand === "scissors")
+                else if(playerHand === "plant")
                 {
-                    if(computerSelection === "paper")
+                    if(computerSelection === "water")
                     {
                         playerWin++;
-                        return victoryMsg;
                     }
                     else 
                     {
                         compWin++;   
-                        return defeatMsg;
                     } 
                 }
-                else if(playerHand === "paper")
+                else if(playerHand === "water")
                 {
-                    if(computerSelection === "rock")
+                    if(computerSelection === "fire")
                     {
                         playerWin++;
-                        return victoryMsg;
                     }
                     else 
                     {
                         compWin++;
-                        return defeatMsg;
                     } 
                 }
-                
-            }  
 
-            function game()
+                const pics = document.querySelector("#computerChoicePic")
+                switch(computerSelection)
+                {
+                    case "fire":
+                    pics.src = "images/FireIcon4.png";
+                    break;
+                    
+                    case "plant":
+                    pics.src = "images/PlantIcon4.png";
+                    break;
+
+                    case "water":
+                    pics.src = "images/WaterIcon4.png";
+                    break;
+                }
+
+                document.querySelector("#playerScore").textContent = playerWin;
+                document.querySelector("#computerScore").textContent = compWin;
+            } 
+
+            function playOneRound(e)
             {
-                while(playerWin < 5 && compWin < 5)
-                {
-                    console.log(playRound(prompt("Rock paper or scissors?"), computerPlay()));
-                    console.log("Player score: " + playerWin + " Computer score: " + compWin);
-                }
-                
-                if(playerWin === 5)
-                {
-                    console.log("Congratulations you won!");
-                }
-                else
-                {
-                    console.log("Yikes you lost!");
-                }
-
-                playerWin = 0;
-                compWin = 0;
-
-
+                playRound(e.target.id, computerPlay());
             }
+
+            const buttons = document.querySelectorAll(".playerButton")
+            buttons.forEach(button => button.addEventListener("click", playOneRound)); 
         </script>
     </body>
 </html>
