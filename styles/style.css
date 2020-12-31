@@ -19,6 +19,7 @@ header {
     display: flex;
     justify-content: center;
     font-size: 70px;
+    margin-top: 30px;
 }
 
 .fireFont {
@@ -51,18 +52,18 @@ header {
 #elementIcons {
     display: flex;
     justify-content: space-evenly;
-    cursor: pointer;
 }
 
 .playerButton:hover {
     transform: scale(1.1);
+    cursor: pointer;
 }
 
 .results {
     display: flex;
     justify-content: center;
     font-size: 40px;
-    margin-top: 80px;
+    margin-top: 50px;
 }
 
 #computerChoice {
@@ -70,10 +71,28 @@ header {
     justify-content: center;
     align-items: center;
     font-size: 40px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 #compChoiceText {
     margin-left: 20px;
 }
 
+#playAgain {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.playButton {
+    font-size: 30px;
+    font-family: Chewy;
+    padding: 10px 15px 10px 15px;
+    border: solid 5px black;
+    border-radius: 5px;
+    background-color: #effdfb;
+    cursor: pointer;
+}
+.playButton:hover {
+    transform: scale(1.1);
+}

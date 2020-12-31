@@ -37,19 +37,21 @@
             </div>
 
             <div class = "results">
-                <p>You have lost. <span class = "fireFont">Fire</span> burns <span class = "plantFont">Plant</span></p>
+                <p id = roundMessage>Pick an element to play</p>
              </div>
 
             <div id = "computerChoice">
                 <p>Computer choice: </p>
                 <div id = "compChoiceText"><img id = "computerChoicePic" src = "images/FireIcon4.png"></div>
             </div>
+
+            <div id = "playAgain"></div>
         </div>
 
 
         <script>
-            let playerWin = 0;
-            let compWin = 0;
+            let playerPoints = 0;
+            let compPoints = 0;
 
             function computerPlay()
             {
@@ -61,48 +63,44 @@
 
             function playRound(playerSelection, computerSelection)
             {
-                let playerHand = playerSelection.toLowerCase();
-                let victoryMsg = "You win! " + playerHand + " beats " + computerSelection;
-                let defeatMsg = "You lost! " + playerHand + " loses to " + computerSelection;
-                let tieMsg = "Draw! " + playerHand + " ties " + computerSelection;
+                pSelectionLowerCase = playerSelection.toLowerCase();
+                const roundMessage = document.querySelector("#roundMessage");
 
-                const resultsDiv = document.querySelector("#results");
-
-                if(playerHand === computerSelection)
+                if(pSelectionLowerCase  === computerSelection)
                 {
-                    return;
+                    playerTie(pSelectionLowerCase )
                 }
-                else if(playerHand === "fire")
+                else if(pSelectionLowerCase  === "fire")
                 {
                     if(computerSelection === "plant")
                     {
-                        playerWin++;
+                        playerWin(pSelectionLowerCase, computerSelection);
                     }
                     else 
                     {
-                        compWin++;
+                        playerLose(pSelectionLowerCase, computerSelection);
                     }
                 }
-                else if(playerHand === "plant")
+                else if(pSelectionLowerCase === "plant")
                 {
                     if(computerSelection === "water")
                     {
-                        playerWin++;
+                        playerWin(pSelectionLowerCase, computerSelection);
                     }
                     else 
                     {
-                        compWin++;   
+                        playerLose(pSelectionLowerCase, computerSelection);
                     } 
                 }
-                else if(playerHand === "water")
+                else if(pSelectionLowerCase === "water")
                 {
                     if(computerSelection === "fire")
                     {
-                        playerWin++;
+                        playerWin(pSelectionLowerCase, computerSelection);
                     }
                     else 
                     {
-                        compWin++;
+                        playerLose(pSelectionLowerCase, computerSelection);
                     } 
                 }
 
@@ -110,24 +108,112 @@
                 switch(computerSelection)
                 {
                     case "fire":
-                    pics.src = "images/FireIcon4.png";
-                    break;
+                        pics.src = "images/FireIcon4.png";
+                        break;
                     
                     case "plant":
-                    pics.src = "images/PlantIcon4.png";
-                    break;
+                        pics.src = "images/PlantIcon4.png";
+                        break;
 
                     case "water":
-                    pics.src = "images/WaterIcon4.png";
-                    break;
+                        pics.src = "images/WaterIcon4.png";
+                        break;
                 }
 
-                document.querySelector("#playerScore").textContent = playerWin;
-                document.querySelector("#computerScore").textContent = compWin;
+                document.querySelector("#playerScore").textContent = playerPoints;
+                document.querySelector("#computerScore").textContent = compPoints;
+
+                if(playerPoints >= 5 || compPoints >= 5)
+                {
+                    const playAgainDiv = document.querySelector("#playAgain");
+                    const playAgainButton = document.createElement("button");
+
+                    playAgainButton.classList.add("playButton");
+                    playAgainButton.textContent = "Play again!";
+                    playAgainButton.addEventListener("click", () => window.location.reload());
+
+                    playAgainDiv.appendChild(playAgainButton);
+                    return;
+                }
             } 
+
+            function playerTie(playerSelection)
+            {
+                roundMessage.textContent = "It's a tie! "
+
+                switch(playerSelection)
+                {
+                    case "fire":
+                        roundMessage.innerHTML += "<span class = \"fireFont\">Fire</span> neutralizes " + 
+                                                  "<span class = \"fireFont\">fire</span>";
+                        break;
+                        
+                    case "plant":
+                        roundMessage.innerHTML += "<span class = \"plantFont\">Plant</span> neutralizes " + 
+                                                  "<span class = \"plantFont\">plant</span>";
+                        break;
+                        
+                    case "water":
+                        roundMessage.innerHTML += "<span class = \"waterFont\">Water</span> neutralizes " + 
+                                                  "<span class = \"waterFont\">water</span>";
+                        break;
+                }
+            }
+
+            function playerWin(playerSelection, computerSelection)
+            {
+                playerPoints++;
+                roundMessage.textContent = "You win! "
+                    
+                switch(playerSelection)
+                {
+                    case "fire":
+                        roundMessage.innerHTML += "<span class = \"fireFont\">Fire</span> burns " + 
+                                                  "<span class = \"plantFont\">plant</span>";
+                        break;
+
+                    case "plant":
+                        roundMessage.innerHTML += "<span class = \"plantFont\">Plant</span> absorbs " + 
+                                                  "<span class = \"waterFont\">water</span>";
+                        break;
+
+                    case "water":
+                        roundMessage.innerHTML += "<span class = \"waterFont\">Water</span> extinguishes " + 
+                                                  "<span class = \"fireFont\">fire</span>";
+                        break;
+                }
+            }
+
+            function playerLose(playerSelection, computerSelection)
+            {
+                compPoints++;
+                roundMessage.textContent = "You have lost. "
+                    
+                switch(playerSelection)
+                {
+                    case "fire":
+                        roundMessage.innerHTML += "<span class = \"fireFont\">Fire</span> is extinguished by " + 
+                                                  "<span class = \"waterFont\">water</span>";
+                        break;
+
+                    case "plant":
+                        roundMessage.innerHTML += "<span class = \"plantFont\">Plant</span> is burned by " + 
+                                                  "<span class = \"fireFont\">fire</span>";
+                        break;
+
+                    case "water":
+                        roundMessage.innerHTML += "<span class = \"waterFont\">Water</span> is absorbed by " + 
+                                                  "<span class = \"plantFont\">plant</span>";
+                    break;
+                }
+            }
 
             function playOneRound(e)
             {
+                if(playerPoints >= 5 || compPoints >= 5)
+                {
+                    return;
+                }
                 playRound(e.target.id, computerPlay());
             }
 
