@@ -76,6 +76,7 @@ header {
 
 #compChoiceText {
     margin-left: 20px;
+    visibility: hidden;
 }
 
 #playAgain {
